@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
+        .card { background: white; padding: 15px; margin: 10px; border-radius: 10px; box-shadow: 0 2px 5px #ccc; text-align: center; }
+        h1 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>منيو مطعم نوفا</h1>
+    <div id="menu-container">جاري التحميل...</div>
+
+    <script>
+        // ضع هنا رابط الـ Webhook الخاص بـ n8n (الـ Production URL)
+        const URL = "https://widow-curing-carving.ngrok-free.dev/webhook/menu";
+
+        fetch(URL)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('menu-container');
+                container.innerHTML = data.map(i => `<div class="card">${i.food_name} - ${i.price} ج.م</div>`).join('');
+            })
+            .catch(() => document.getElementById('menu-container').innerText = "خطأ في الاتصال بالبيانات");
+    </script>
+</body>
+</html>
